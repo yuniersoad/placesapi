@@ -1,5 +1,6 @@
 package com.places;
 
+import org.jboss.jandex.Result;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Primary;
 import org.springframework.stereotype.Component;
@@ -17,7 +18,7 @@ public class PlaceServiceImpl implements PlaceService {
 
 
     @Override
-    public void addOrAgregate(Place place){
+    public Place addOrAgregate(Place place){
         final String name = place.getName();
         List<Place> nearPlaces = findNear(place.getLat(), place.getLng(), 10.0);
         Optional<Place> match = nearPlaces.stream().filter((p -> fuzzyMacht(name, p.getName()))).findFirst();
@@ -26,6 +27,7 @@ public class PlaceServiceImpl implements PlaceService {
                 p -> mergePlaces(p, place)
                 ).orElse(place);
         repo.save(result);
+        return result;
     }
 
     @Override

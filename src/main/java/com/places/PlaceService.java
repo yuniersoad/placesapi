@@ -3,7 +3,7 @@ package com.places;
 import java.util.List;
 
 public interface PlaceService {
-    public void addOrAgregate(Place place);
+    public Place addOrAgregate(Place place);
 
     /**
      *

@@ -12,9 +12,9 @@ public class PlacesController {
     private PlaceService service;
 
     @RequestMapping(method = RequestMethod.POST)
-    public ResponseEntity<String> add(@RequestBody Place place){
-        service.addOrAgregate(place);
-        return ResponseEntity.ok("added");
+    public ResponseEntity<?> add(@RequestBody Place place){
+        Place p = service.addOrAgregate(place);
+        return ResponseEntity.ok(p);
     }
 
     @RequestMapping(method = RequestMethod.GET)
