@@ -77,6 +77,23 @@ public class ApiApplicationTests {
 	}
 
 	@Test
+	public void farPlacesNotCombined() throws Exception {
+		String placeJson = json(new Place("Crepes & Waffles", 4.7506756, -74.09, 5.0));
+		mockMvc.perform(post("/places")
+				.contentType(contentType)
+				.content(placeJson))
+				.andExpect(status().isOk());
+
+		placeJson = json(new Place("Crepes & Waffles", 5.7506756, -3.09, 5.0));
+		mockMvc.perform(post("/places")
+				.contentType(contentType)
+				.content(placeJson))
+				.andExpect(status().isOk());
+
+		Assert.assertThat(placeRepository.count(), is(2L));
+	}
+
+	@Test
 	public void aggregateRatings() throws Exception {
 		String placeJsonRating5 = json(new Place("Crepes & Waffles", 4.7506756, -74.09, 5.0));
 		mockMvc.perform(post("/places")
@@ -104,6 +121,8 @@ public class ApiApplicationTests {
 				.andExpect(status().isOk())
 				.andExpect(jsonPath("$", hasSize(1)))
 				.andExpect(jsonPath("$[0].rating", is(4.25)));
+
+		Assert.assertThat(placeRepository.count(), is(1L));
 	}
 
 	protected String json(Object o) throws IOException {
