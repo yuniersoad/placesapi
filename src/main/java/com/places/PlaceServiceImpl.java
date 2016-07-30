@@ -21,6 +21,7 @@ public class PlaceServiceImpl implements PlaceService {
         final String name = place.getName();
         List<Place> nearPlaces = findNear(place.getLat(), place.getLng(), 10.0);
         Optional<Place> match = nearPlaces.stream().filter((p -> fuzzyMacht(name, p.getName()))).findFirst();
+
         Place result =  match.map(
                 p -> mergePlaces(p, place)
                 ).orElse(place);

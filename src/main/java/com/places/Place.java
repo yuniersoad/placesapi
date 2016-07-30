@@ -1,5 +1,6 @@
 package com.places;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import org.hibernate.annotations.Type;
 
 import javax.persistence.Entity;
@@ -13,6 +14,7 @@ public class Place {
 
     @Id
     @GeneratedValue
+    @JsonIgnore
     private Long id;
 
     private Double lat;
