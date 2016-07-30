@@ -23,7 +23,11 @@ public class Place {
 
     private String name;
 
-    private Float rating;
+    private Double ratingTotal;
+
+    private Long ratingCount;
+
+    private Double rating;
 
     /*@Type(type="org.hibernate.spatial.GeometryType")
     private Point point;*/
@@ -45,27 +49,36 @@ public class Place {
         return name;
     }
 
-    public Float getRating() {
+    public Double getRating() {
         return rating;
     }
 
-    /*@PrePersist
+    @PrePersist
     public void prePersist(){
-        point = (new GeometryFactory()).createPoint(new Coordinate(lat, lng));
-    }*/
+        //point = (new GeometryFactory()).createPoint(new Coordinate(lat, lng));
+        if (id == null){
+            ratingTotal = rating;
+            ratingCount = 1L;
+        }
+    }
 
-    public Place(String name, Double lat, Double lng, Float rating){
+    public Place(String name, Double lat, Double lng, Double rating){
         this.name = name;
         this.lat = lat;
         this.lng = lng;
         this.rating = rating;
+        this.ratingTotal = 0.0;
+        this.ratingCount = 0L;
     }
 
     Place(){
-
+        this.ratingTotal = 0.0;
+        this.ratingCount = 0L;
     }
 
-    public void setRating(Float rating) {
-        this.rating = rating;
+    public void addRating(Double rating) {
+        ratingTotal += rating;
+        ratingCount++;
+        this.rating = ratingTotal / ratingCount;
     }
 }

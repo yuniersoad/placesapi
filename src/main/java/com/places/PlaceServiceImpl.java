@@ -1,11 +1,9 @@
 package com.places;
 
-import org.jboss.jandex.Result;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Primary;
 import org.springframework.stereotype.Component;
 
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
@@ -36,8 +34,7 @@ public class PlaceServiceImpl implements PlaceService {
     }
 
     private Place mergePlaces(Place p, Place place) {
-        Float newRating = (p.getRating() + place.getRating()) / 2.0f;
-        p.setRating(newRating);
+        p.addRating(place.getRating());
         return  p;
     }
 
