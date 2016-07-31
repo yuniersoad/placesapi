@@ -1,8 +1,10 @@
 package com.places;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Primary;
 import org.springframework.stereotype.Component;
+import com.wantedtech.common.xpresso.x;
 
 import java.util.List;
 import java.util.Optional;
@@ -14,6 +16,8 @@ public class PlaceServiceImpl implements PlaceService {
     @Autowired
     private PlaceRepository repo;
 
+    @Value("${places.name.similarity.threshold}")
+    private Integer similarityThreshold;
 
     @Override
     public Place addOrAgregate(Place place){
@@ -39,7 +43,8 @@ public class PlaceServiceImpl implements PlaceService {
     }
 
     private boolean fuzzyMacht(String s1, String s2) {
-        return  s1.equalsIgnoreCase(s2);
+        int similarity = x.String(s1).similarity(s2);
+        return   similarity >= similarityThreshold;
     }
 
 

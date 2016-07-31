@@ -94,6 +94,40 @@ public class ApiApplicationTests {
 	}
 
 	@Test
+	public void nearPlacesWithSimilarNameAreCombined() throws Exception {
+		String placeJson = json(new Place("Crepes & Waffles", 4.7506756, -74.09, 5.0));
+		mockMvc.perform(post("/places")
+				.contentType(contentType)
+				.content(placeJson))
+				.andExpect(status().isOk());
+
+		placeJson = json(new Place("Crepes Waffles", 4.76, -74.03, 5.0));
+		mockMvc.perform(post("/places")
+				.contentType(contentType)
+				.content(placeJson))
+				.andExpect(status().isOk());
+
+		Assert.assertThat(placeRepository.count(), is(1L));
+	}
+
+	@Test
+	public void nearPlacesWithNoSimilarNameAreNotCombined() throws Exception {
+		String placeJson = json(new Place("Crepes & Waffles", 4.7506756, -74.09, 5.0));
+		mockMvc.perform(post("/places")
+				.contentType(contentType)
+				.content(placeJson))
+				.andExpect(status().isOk());
+
+		placeJson = json(new Place("El Corral", 4.76, -74.03, 5.0));
+		mockMvc.perform(post("/places")
+				.contentType(contentType)
+				.content(placeJson))
+				.andExpect(status().isOk());
+
+		Assert.assertThat(placeRepository.count(), is(2L));
+	}
+
+	@Test
 	public void aggregateRatings() throws Exception {
 		String placeJsonRating5 = json(new Place("Crepes & Waffles", 4.7506756, -74.09, 5.0));
 		mockMvc.perform(post("/places")
