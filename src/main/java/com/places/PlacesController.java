@@ -20,6 +20,6 @@ public class PlacesController {
     @RequestMapping(method = RequestMethod.GET)
     public ResponseEntity<?> find(@RequestParam Double lat, @RequestParam Double lng){
 
-        return ResponseEntity.ok(service.findNear(lat, lng, 10.0));
+        return ResponseEntity.ok(service.findNear(lat, lng));
     }
 }

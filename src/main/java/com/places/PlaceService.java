@@ -13,4 +13,5 @@ public interface PlaceService {
      * @return Near Places
      */
     public List<Place> findNear(Double lat, Double lng, Double radio);
+    public List<Place> findNear(Double lat, Double lng);
 }

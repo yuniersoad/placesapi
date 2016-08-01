@@ -19,10 +19,13 @@ public class PlaceServiceImpl implements PlaceService {
     @Value("${places.name.similarity.threshold}")
     private Integer similarityThreshold;
 
+    @Value("${places.near.radio}")
+    private Double nearRadio;
+
     @Override
     public Place addOrAgregate(Place place){
         final String name = place.getName();
-        List<Place> nearPlaces = findNear(place.getLat(), place.getLng(), 10.0);
+        List<Place> nearPlaces = findNear(place.getLat(), place.getLng());
         Optional<Place> match = nearPlaces.stream().filter((p -> fuzzyMacht(name, p.getName()))).findFirst();
 
         Place result =  match.map(
@@ -35,6 +38,11 @@ public class PlaceServiceImpl implements PlaceService {
     @Override
     public List<Place> findNear(Double lat, Double lng, Double radio) {
         return repo.findNear(lat, lng, radio);
+    }
+
+    @Override
+    public List<Place> findNear(Double lat, Double lng) {
+        return repo.findNear(lat, lng, nearRadio);
     }
 
     private Place mergePlaces(Place p, Place place) {

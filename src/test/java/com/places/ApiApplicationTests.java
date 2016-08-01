@@ -71,7 +71,7 @@ public class ApiApplicationTests {
 				.content(placeJson))
 				.andExpect(status().isOk());
 
-		mockMvc.perform(get("/places?lat=4&lng=-74"))
+		mockMvc.perform(get("/places?lat=4.7506&lng=-74.09"))
 				.andExpect(status().isOk())
 				.andExpect(jsonPath("$", hasSize(1)));
 	}
@@ -101,7 +101,7 @@ public class ApiApplicationTests {
 				.content(placeJson))
 				.andExpect(status().isOk());
 
-		placeJson = json(new Place("Crepes Waffles", 4.76, -74.03, 5.0));
+		placeJson = json(new Place("Crepes Waffles", 4.7506, -74.06, 5.0));
 		mockMvc.perform(post("/places")
 				.contentType(contentType)
 				.content(placeJson))
@@ -118,7 +118,7 @@ public class ApiApplicationTests {
 				.content(placeJson))
 				.andExpect(status().isOk());
 
-		placeJson = json(new Place("El Corral", 4.76, -74.03, 5.0));
+		placeJson = json(new Place("El Corral", 4.75, -74.07, 5.0));
 		mockMvc.perform(post("/places")
 				.contentType(contentType)
 				.content(placeJson))
@@ -151,7 +151,7 @@ public class ApiApplicationTests {
 				.content(placeJsonRating4))
 				.andExpect(status().isOk());
 
-		mockMvc.perform(get("/places?lat=4&lng=-74"))
+		mockMvc.perform(get("/places?lat=4.7506&lng=-74.1"))
 				.andExpect(status().isOk())
 				.andExpect(jsonPath("$", hasSize(1)))
 				.andExpect(jsonPath("$[0].rating", is(4.25)));
