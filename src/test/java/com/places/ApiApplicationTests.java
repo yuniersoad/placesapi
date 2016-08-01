@@ -159,6 +159,33 @@ public class ApiApplicationTests {
 		Assert.assertThat(placeRepository.count(), is(1L));
 	}
 
+	@Test
+	public void invalidNameRejected() throws Exception {
+		String placeJsonRating4 = json(new Place("", 4.7506756, -74.09, 4.0));
+		mockMvc.perform(post("/places")
+				.contentType(contentType)
+				.content(placeJsonRating4))
+				.andExpect(status().isBadRequest());
+	}
+
+	@Test
+	public void invalidCoordintesRejected() throws Exception {
+		String placeJsonRating4 = json(new Place("Wok", 400.0, -74.09, 4.0));
+		mockMvc.perform(post("/places")
+				.contentType(contentType)
+				.content(placeJsonRating4))
+				.andExpect(status().isBadRequest());
+	}
+
+	@Test
+	public void invalidRatingRejected() throws Exception {
+		String placeJsonRating4 = json(new Place("El corral", 4.7506756, -74.09, 400.0));
+		mockMvc.perform(post("/places")
+				.contentType(contentType)
+				.content(placeJsonRating4))
+				.andExpect(status().isBadRequest());
+	}
+
 	protected String json(Object o) throws IOException {
 		MockHttpOutputMessage mockHttpOutputMessage = new MockHttpOutputMessage();
 		this.mappingJackson2HttpMessageConverter.write(

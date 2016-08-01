@@ -5,12 +5,14 @@ import com.vividsolutions.jts.geom.Coordinate;
 import com.vividsolutions.jts.geom.GeometryFactory;
 import com.vividsolutions.jts.geom.Point;
 import org.hibernate.annotations.Type;
+import org.hibernate.validator.constraints.Range;
 
 
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.PrePersist;
+import javax.validation.constraints.Size;
 
 
 @Entity
@@ -21,16 +23,20 @@ public class Place {
     @JsonIgnore
     private Long id;
 
+    @Range(min = -90, max = 90)
     private Double lat;
 
+    @Range(min = -180, max = 180)
     private Double lng;
 
+    @Size(min=2, max=30)
     private String name;
 
     private Double ratingTotal;
 
     private Long ratingCount;
 
+    @Range(min = 1, max = 5)
     private Double rating;
 
 
