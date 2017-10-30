@@ -1,0 +1,22 @@
+version: '3.3'
+
+services:
+    places_api:
+      build: .
+      ports:
+      - "8080:8080"
+      depends_on:
+      - postgres
+      volumes:
+        - maven_repo:/root/.m2/repository
+    postgres:
+      image: mdillon/postgis
+      environment:
+        POSTGRES_PASSWORD: secret
+      volumes:
+        - postgres_storage:/var/lib/postgresql/data
+        - ./docker/places_db:/docker-entrypoint-initdb.d
+
+volumes:
+  postgres_storage: {}
+  maven_repo: {}
