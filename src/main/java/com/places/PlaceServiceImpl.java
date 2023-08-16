@@ -16,6 +16,7 @@ public class PlaceServiceImpl implements PlaceService {
     @Autowired
     private PlaceRepository repo;
 
+
     @Value("${places.name.similarity.threshold}")
     private Integer similarityThreshold;
 

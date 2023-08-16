@@ -1,11 +1,11 @@
 package com.places;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
-import com.vividsolutions.jts.geom.Coordinate;
-import com.vividsolutions.jts.geom.GeometryFactory;
-import com.vividsolutions.jts.geom.Point;
-import org.hibernate.annotations.Type;
+
 import org.hibernate.validator.constraints.Range;
+import org.locationtech.jts.geom.Coordinate;
+import org.locationtech.jts.geom.GeometryFactory;
+import org.locationtech.jts.geom.Point;
 
 
 import javax.persistence.Entity;
@@ -17,7 +17,6 @@ import javax.validation.constraints.Size;
 
 @Entity
 public class Place {
-
     @Id
     @GeneratedValue
     @JsonIgnore
@@ -40,7 +39,7 @@ public class Place {
     private Double rating;
 
 
-    @Type(type="org.hibernate.spatial.GeometryType")
+
     private Point point;
 
 
