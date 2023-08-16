@@ -2,6 +2,7 @@ package com.places;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
+
 import org.hibernate.validator.constraints.Range;
 import org.locationtech.jts.geom.Coordinate;
 import org.locationtech.jts.geom.GeometryFactory;

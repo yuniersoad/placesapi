@@ -6,6 +6,7 @@ import org.springframework.context.annotation.Primary;
 import org.springframework.stereotype.Component;
 import com.wantedtech.common.xpresso.x;
 
+import javax.validation.Valid;
 import java.util.List;
 import java.util.Optional;
 
@@ -24,7 +25,7 @@ public class PlaceServiceImpl implements PlaceService {
     private Double nearRadio;
 
     @Override
-    public Place addOrAgregate(Place place){
+    public Place addOrAgregate(@Valid Place place){
         final String name = place.getName();
         List<Place> nearPlaces = findNear(place.getLat(), place.getLng());
         Optional<Place> match = nearPlaces.stream().filter((p -> fuzzyMacht(name, p.getName()))).findFirst();
